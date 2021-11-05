@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.gameState != GameState.NPCINTERACTION)
         {
+            #region Player Movement
             float x = Input.GetAxisRaw("Horizontal");
             float z = Input.GetAxisRaw("Vertical");
             if (GameManager.Instance.camMode == CameraMode.FIXED)
@@ -43,11 +44,19 @@ public class PlayerController : MonoBehaviour
             {
                 velocity = new Vector3(x, 0f, z).normalized;
             }
-            pc.Move(velocity * Time.deltaTime * _playerSpeed);
-            if (velocity != Vector3.zero)
+            velocity.y = Physics.gravity.y;
+            if (pc.isGrounded)
             {
-                gameObject.transform.forward = velocity.normalized;
+                velocity.y = 0f;
             }
+            pc.Move(velocity * Time.deltaTime * _playerSpeed);
+            if (velocity.x != 0f || velocity.z != 0f)
+            {
+                Vector3 facing = velocity.normalized;
+                facing.y = 0f;
+                gameObject.transform.forward = facing;
+            }
+            #endregion Player Movement
         }
     }
 }

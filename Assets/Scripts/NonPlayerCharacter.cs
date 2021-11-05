@@ -1,30 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using TMPro;
 public class NonPlayerCharacter : Interactable
 {
     private GameManager gameManager;
-    public string npcName;
-    public Faction faction = Faction.REDTEAM;
+    public NPC npc;
+    public Queue<Vector4> schedule;
     public NPCState npcState = NPCState.IDLE;
     private NPCState _previousState;
     [SerializeField] private TextMeshPro _textName;
+    private NavMeshAgent _agent;
     private void Awake()
     {
         gameManager = GameManager.Instance;
     }
     void Start()
     {
-        _textName.text = npcName;
+        _textName.text = npc.npcName;
+        _agent = this.GetComponent<NavMeshAgent>();
+        schedule = npc.GetSchedule();
+        npc.ShowSchedule(schedule);
+        advanceSchedule();
     }
     void Update()
     {
-        if (this.isInteractable() && this.isFacingAndNearby())
+        Debug.Log("Current Hour: " + TimeManager.TimeHour);
+        if (_agent.velocity.magnitude >= 0.05f)
+        {
+            npcState = NPCState.MOVINGTONODE;
+        }
+        if (_agent.remainingDistance >= 0f && npcState == NPCState.MOVINGTONODE)
+        {
+            npcState = NPCState.IDLE;
+        }
+        if (this.isInteractable() /*&& this.isFacingAndNearby()*/)
         {
             showNameplate();
             if (npcState != NPCState.PLAYERINTERACT && Input.GetKeyDown(KeyCode.Space))
             {
                 beginPlayerInteraction();
-                Debug.Log("Game State: " + gameManager.gameState);
             }
         }
         else hideNameplate();
@@ -32,6 +49,7 @@ public class NonPlayerCharacter : Interactable
         {
             playerInteraction();
         }
+        handleSchedule();
     }
     override public void showNameplate()
     {
@@ -65,5 +83,19 @@ public class NonPlayerCharacter : Interactable
             exitPlayerInteraction();
             Debug.Log("Game State: " + gameManager.gameState);
         }
+    }
+    private void handleSchedule()
+    {
+        Debug.Log("Hour To Leave: " + schedule.Peek().w);
+        if (TimeManager.TimeHour == schedule.Peek().w)
+        {
+            advanceSchedule();
+        }
+    }
+    private void advanceSchedule()
+    {
+        Vector4 v = schedule.Dequeue();
+        schedule.Enqueue(v);
+        _agent.SetDestination(v);
     }
 }

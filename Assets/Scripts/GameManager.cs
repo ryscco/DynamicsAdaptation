@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum GameState { MAINMENU, PAUSEMENU, PLAY, NPCINTERACTION }
 public enum CameraMode { FIXED, MOBILE, CINEMATIC, DIALOGUE, FOLLOW_PLAYER, FOLLOW_OTHER }
-public enum Faction { REDTEAM, BLUETEAM, GREENTEAM }
 public enum NPCState { IDLE, PLAYERINTERACT, MOVINGTONODE }
 public class GameManager
 {
@@ -40,17 +39,17 @@ public class GameManager
     }
     public bool ProximityCheck(Transform t1, Transform t2, float d)
     {
-        return ((t1.localPosition - t2.localPosition).magnitude <= d);
+        return ((t1.position - t2.position).magnitude <= d);
     }
-    public bool FacingCheck(Transform t1, Transform t2)
-    {
-        Quaternion q1 = t1.localToWorldMatrix.rotation;
-        Quaternion q2 = t2.localToWorldMatrix.rotation;
-        float q3 = Quaternion.Angle(q1, q2);
-        Debug.Log("Angle between: " + q3);
-        return (Vector3.Dot(t1.forward, t2.forward) > 0f);
-        //&& NiftyMath.AngleInRange360(t1, t2, Vector3.up, 10f, 170f)
-    }
+    //public bool FacingCheck(Transform t1, Transform t2)
+    //{
+    //    Quaternion q1 = t1.localToWorldMatrix.rotation;
+    //    Quaternion q2 = t2.localToWorldMatrix.rotation;
+    //    float q3 = Quaternion.Angle(q1, q2);
+    //    Debug.Log("Angle between: " + q3);
+    //    return (Vector3.Dot(t1.forward, t2.forward) > 0f);
+    //    return NiftyMath.AngleInRange360(t1, t2, Vector3.up, 10f, 170f);
+    //}
     public void OnApplicationQuit()
     {
         GameManager._instance = null;
