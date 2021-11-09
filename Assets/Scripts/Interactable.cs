@@ -5,14 +5,7 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     private bool _interactable;
-    public bool isInteractable()
-    {
-        return _interactable;
-    }
-    //public bool isFacingAndNearby()
-    //{
-    //    return GameManager.Instance.FacingCheck(GameManager.Instance.player.transform, this.transform);
-    //}
+    public bool isInteractable() => _interactable;
     public abstract void showNameplate();
     public abstract void hideNameplate();
     protected abstract void beginPlayerInteraction();

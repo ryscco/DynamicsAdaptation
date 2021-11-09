@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eccaf9d353c58f54784d48fc4b90e4df, type: 3}
+  m_Name: Jane
+  m_EditorClassIdentifier: 
+  npcName: Jane
+  family: {fileID: 11400000, guid: 5607ac9f5de3e1f42bf8642413c0073a, type: 2}
+  schedule:
+  - {fileID: 11400000, guid: 1af0228c2ad61434ebf86b86381e5379, type: 2}
+  - {fileID: 11400000, guid: ee98a535b6fbb3341b5316f239956ae6, type: 2}
+  - {fileID: 11400000, guid: 017aa6eb2cca76046a764fea4fb0d5d2, type: 2}
+  connectionLogic:
+    job: {fileID: 0}
+    wealth: 0
+    personality: {fileID: 0}

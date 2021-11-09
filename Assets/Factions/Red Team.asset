@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e15cd0f4852de344b7d9c3581a758e7, type: 3}
   m_Name: Red Team
   m_EditorClassIdentifier: 
-  name: Red Team
+  factionName: Red Team
+  subordinateFamilies:
+  - {fileID: 11400000, guid: 5607ac9f5de3e1f42bf8642413c0073a, type: 2}
+  familyStandings:
+  - family: {fileID: 11400000, guid: 5607ac9f5de3e1f42bf8642413c0073a, type: 2}
+    factionStanding: 0.601
+  factionStandings:
+  - faction: {fileID: 11400000, guid: 7c5b143d6847a6a49ba9c5651daa3832, type: 2}
+    interFactionStanding: -0.695

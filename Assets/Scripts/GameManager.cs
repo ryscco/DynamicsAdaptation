@@ -11,6 +11,7 @@ public class GameManager
     public GameState gameState;
     public CameraMode camMode;
     public GameObject player;
+    public Faction[] allFactions;
     public static GameManager Instance
     {
         get
@@ -22,14 +23,8 @@ public class GameManager
             return GameManager._instance;
         }
     }
-    public void SetGameState(GameState s)
-    {
-        gameState = s;
-    }
-    public void SetCameraMode(CameraMode c)
-    {
-        camMode = c;
-    }
+    public void SetGameState(GameState s) => gameState = s;
+    public void SetCameraMode(CameraMode c) => camMode = c;
     public void AttachPlayer()
     {
         if (player == null)
@@ -37,19 +32,17 @@ public class GameManager
             player = GameObject.Find("Player");
         }
     }
-    public bool ProximityCheck(Transform t1, Transform t2, float d)
+    public bool ProximityCheck(Transform t1, Transform t2, float d) => ((t1.position - t2.position).magnitude <= d);
+    public Vector3 CameraPosition() => Camera.main.transform.localPosition;
+    public void PopulateFactions()
     {
-        return ((t1.position - t2.position).magnitude <= d);
+        allFactions = GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>().GetAllFactions();
     }
-    //public bool FacingCheck(Transform t1, Transform t2)
-    //{
-    //    Quaternion q1 = t1.localToWorldMatrix.rotation;
-    //    Quaternion q2 = t2.localToWorldMatrix.rotation;
-    //    float q3 = Quaternion.Angle(q1, q2);
-    //    Debug.Log("Angle between: " + q3);
-    //    return (Vector3.Dot(t1.forward, t2.forward) > 0f);
-    //    return NiftyMath.AngleInRange360(t1, t2, Vector3.up, 10f, 170f);
-    //}
+    public void DisplayRelationships()
+    {
+        GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>().SetBaselineRelationships();
+        GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>().DisplayRelationships();
+    }
     public void OnApplicationQuit()
     {
         GameManager._instance = null;

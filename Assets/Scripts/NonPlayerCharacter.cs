@@ -27,7 +27,8 @@ public class NonPlayerCharacter : Interactable
     }
     void Update()
     {
-        Debug.Log("Current Hour: " + TimeManager.TimeHour);
+        _textName.gameObject.transform.rotation = Quaternion.LookRotation(GameManager.Instance.CameraPosition());
+        Debug.Log("Current Time: " + TimeManager.TimeHour + " " + TimeManager.TimeMinute);
         if (_agent.velocity.magnitude >= 0.05f)
         {
             npcState = NPCState.MOVINGTONODE;
@@ -36,7 +37,7 @@ public class NonPlayerCharacter : Interactable
         {
             npcState = NPCState.IDLE;
         }
-        if (this.isInteractable() /*&& this.isFacingAndNearby()*/)
+        if (this.isInteractable())
         {
             showNameplate();
             if (npcState != NPCState.PLAYERINTERACT && Input.GetKeyDown(KeyCode.Space))
@@ -70,10 +71,13 @@ public class NonPlayerCharacter : Interactable
         _previousState = npcState;
         npcState = NPCState.PLAYERINTERACT;
         gameManager.gameState = GameState.NPCINTERACTION;
+        _agent.isStopped = true;
+        this.transform.LookAt(GameManager.Instance.player.transform);
     }
     protected override void exitPlayerInteraction()
     {
         npcState = _previousState;
+        _agent.isStopped = false;
         gameManager.gameState = GameState.PLAY;
     }
     protected override void playerInteraction()
