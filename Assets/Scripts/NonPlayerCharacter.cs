@@ -22,7 +22,8 @@ public class NonPlayerCharacter : Interactable
         [Range(0f, 1f)] public float wealth;
         public NPCPersonality personality;
     }
-    private GameManager gameManager;
+    private GameManager _gameManager;
+    private RelationshipManager _relationshipManager;
     public string characterName;
     public Family family;
     [SerializeField] public ScheduleNode[] scheduleNodes;
@@ -33,15 +34,16 @@ public class NonPlayerCharacter : Interactable
     private NavMeshAgent _agent;
     private void Awake()
     {
-        gameManager = GameManager.Instance;
+        _gameManager = GameManager.Instance;
     }
     void Start()
     {
+        _relationshipManager = GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>();
         npcState = NPCState.IDLE;
         _textName.text = characterName;
         _agent = this.GetComponent<NavMeshAgent>();
         schedule = makeSchedule();
-        //advanceSchedule();
+        advanceSchedule();
     }
     void Update()
     {
@@ -88,26 +90,25 @@ public class NonPlayerCharacter : Interactable
     {
         previousNpcState = npcState;
         npcState = NPCState.PLAYERINTERACT;
-        gameManager.gameState = GameState.NPCINTERACTION;
+        _gameManager.gameState = GameState.NPCINTERACTION;
         _agent.isStopped = true;
         this.transform.LookAt(GameManager.Instance.player.transform);
         GameManager.Instance.player.transform.LookAt(this.transform);
+        _relationshipManager.PrintRelationships(this.gameObject);
     }
-    protected override IEnumerable playerInteraction()
+    protected override void playerInteraction()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             exitPlayerInteraction();
         }
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Escape));
-        exitPlayerInteraction();
     }
     protected override void exitPlayerInteraction()
     {
         npcState = previousNpcState;
         previousNpcState = NPCState.IDLE;
         _agent.isStopped = false;
-        gameManager.gameState = GameState.PLAY;
+        _gameManager.gameState = GameState.PLAY;
     }
     #endregion PLAYER INTERACTION
     #region SCHEDULE
@@ -148,6 +149,7 @@ public class NonPlayerCharacter : Interactable
     private void OnDrawGizmos()
     {
         Handles.Label(this.transform.position, characterName);
+        Handles.DrawLine(this.transform.localPosition, this.transform.localPosition + this.transform.forward, 5f);
     }
 #endif
 }

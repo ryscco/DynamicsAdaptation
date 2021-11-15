@@ -9,7 +9,7 @@ public abstract class Interactable : MonoBehaviour
     public abstract void hideNameplate();
     protected abstract void beginPlayerInteraction();
     protected abstract void exitPlayerInteraction();
-    protected abstract IEnumerable playerInteraction();
+    protected abstract void playerInteraction();
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player")

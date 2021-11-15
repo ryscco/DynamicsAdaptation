@@ -15,9 +15,12 @@ MonoBehaviour:
   factionName: Blue Team
   subordinateFamilies:
   - {fileID: 11400000, guid: 99301c00fd5eec147ab8c26d700ae861, type: 2}
+  - {fileID: 11400000, guid: d1f807da4d48c0749bb8970b89b3382a, type: 2}
   familyStandings:
   - family: {fileID: 11400000, guid: 99301c00fd5eec147ab8c26d700ae861, type: 2}
-    factionStanding: 0.351
+    factionStanding: 0.35
+  - family: {fileID: 11400000, guid: d1f807da4d48c0749bb8970b89b3382a, type: 2}
+    factionStanding: 1
   factionStandings:
   - faction: {fileID: 11400000, guid: f9b0f50b52e47804ba704d404c0e52e4, type: 2}
-    interFactionStanding: -0.492
+    interFactionStanding: -0.5

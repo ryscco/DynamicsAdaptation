@@ -74,5 +74,12 @@ public class PlayerController : MonoBehaviour
             }
             #endregion Player Movement
         }
+        if (GameManager.Instance.gameState == GameState.NPCINTERACTION)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameManager.Instance.gameState = GameState.PLAY;
+            }
+        }
     }
 }

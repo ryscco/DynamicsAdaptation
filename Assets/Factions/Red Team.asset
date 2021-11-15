@@ -17,7 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5607ac9f5de3e1f42bf8642413c0073a, type: 2}
   familyStandings:
   - family: {fileID: 11400000, guid: 5607ac9f5de3e1f42bf8642413c0073a, type: 2}
-    factionStanding: 0.601
+    factionStanding: 0.6
   factionStandings:
   - faction: {fileID: 11400000, guid: 7c5b143d6847a6a49ba9c5651daa3832, type: 2}
-    interFactionStanding: -0.695
+    interFactionStanding: -0.5
