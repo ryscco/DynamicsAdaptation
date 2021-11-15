@@ -14,19 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   familyName: Blada
   inFaction: {fileID: 11400000, guid: f9b0f50b52e47804ba704d404c0e52e4, type: 2}
-  NPCsInFamily: []
-  personality:
-  - {fileID: 11400000, guid: 7f9b1aee7f0c61c4a89418f95433cb14, type: 2}
-  - {fileID: 11400000, guid: 45a99f8062a32b544ae0e04773d54e37, type: 2}
-  - {fileID: 11400000, guid: 0e2eafe538661b34cba7d45d24f51c5f, type: 2}
+  personality: 000000000100000002000000
   personalityValue:
   - -0.5
   - 0.9
   - 0.2
-  job:
-  - {fileID: 11400000, guid: 04fa5c4315985e346b5f7c7b216dda05, type: 2}
-  - {fileID: 11400000, guid: 4c0b045569fbc9444aeda368e23ced6e, type: 2}
-  - {fileID: 11400000, guid: 8144f85cf46de2b408602708b5155d58, type: 2}
+  job: 000000000100000002000000
   jobValue:
   - 1
   - -0.1

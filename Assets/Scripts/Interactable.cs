@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
@@ -10,7 +9,7 @@ public abstract class Interactable : MonoBehaviour
     public abstract void hideNameplate();
     protected abstract void beginPlayerInteraction();
     protected abstract void exitPlayerInteraction();
-    protected abstract void playerInteraction();
+    protected abstract IEnumerable playerInteraction();
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player")

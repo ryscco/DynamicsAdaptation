@@ -8,11 +8,14 @@ public class Family : ScriptableObject
 {
     public string familyName;
     public Faction inFaction;
-    public NPC[] NPCsInFamily;
-    public Personality[] personality;
+    public NPCPersonality[] personality;
     [Range(-1.0f,1.0f)]
     public float[] personalityValue;
-    public Job[] job;
+    public NPCJob[] job;
     [Range(-1.0f, 1.0f)]
     public float[] jobValue;
+    public override string ToString()
+    {
+        return familyName;
+    }
 }

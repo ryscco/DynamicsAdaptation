@@ -15,7 +15,7 @@ public class TimeManager
             return TimeManager._instance;
         }
     }
-    public static float TimeHour
+    public static int TimeHour
     {
         get => _hour;
     }

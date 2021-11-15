@@ -1,6 +1,12 @@
 using UnityEngine;
-[CreateAssetMenu(menuName = "Camera Location")]
-public class CameraLocations : ScriptableObject
+public class CameraLocations : MonoBehaviour
 {
-    public Vector3 position, rotation;
+    [SerializeField] private Transform xform;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.Equals(GameManager.Instance.player))
+        {
+            GameManager.Instance.SetCameraTransform(xform);
+        }
+    }
 }

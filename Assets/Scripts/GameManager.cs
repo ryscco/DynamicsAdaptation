@@ -34,14 +34,10 @@ public class GameManager
     }
     public bool ProximityCheck(Transform t1, Transform t2, float d) => ((t1.position - t2.position).magnitude <= d);
     public Vector3 CameraPosition() => Camera.main.transform.localPosition;
-    public void PopulateFactions()
+    public void SetCameraTransform(Transform t)
     {
-        allFactions = GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>().GetAllFactions();
-    }
-    public void DisplayRelationships()
-    {
-        GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>().SetBaselineRelationships();
-        GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>().DisplayRelationships();
+        Camera.main.transform.localPosition = t.localPosition;
+        Camera.main.transform.localRotation = t.localRotation;
     }
     public void OnApplicationQuit()
     {

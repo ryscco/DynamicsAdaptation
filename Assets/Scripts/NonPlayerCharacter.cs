@@ -1,16 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
+public enum NPCJob { Fighter, Merchant, Shopkeeper }
+public enum NPCPersonality { Friendly, Rude, Reserved }
 public class NonPlayerCharacter : Interactable
 {
+    [System.Serializable]
+    public struct ScheduleNode
+    {
+        public Vector3 worldPosition;
+        public int hourToLeave;
+    }
+    [System.Serializable]
+    public struct ConnectionLogic
+    {
+        public NPCJob job;
+        [Range(0f, 1f)] public float wealth;
+        public NPCPersonality personality;
+    }
     private GameManager gameManager;
-    public NPC npc;
-    public Queue<Vector4> schedule;
-    public NPCState npcState = NPCState.IDLE;
-    private NPCState _previousState;
+    public string characterName;
+    public Family family;
+    [SerializeField] public ScheduleNode[] scheduleNodes;
+    public Queue<ScheduleNode> schedule;
+    [SerializeField] public ConnectionLogic connectionLogic;
+    public NPCState npcState, previousNpcState;
     [SerializeField] private TextMeshPro _textName;
     private NavMeshAgent _agent;
     private void Awake()
@@ -19,21 +37,24 @@ public class NonPlayerCharacter : Interactable
     }
     void Start()
     {
-        _textName.text = npc.npcName;
+        npcState = NPCState.IDLE;
+        _textName.text = characterName;
         _agent = this.GetComponent<NavMeshAgent>();
-        schedule = npc.GetSchedule();
-        npc.ShowSchedule(schedule);
-        advanceSchedule();
+        schedule = makeSchedule();
+        //advanceSchedule();
     }
     void Update()
     {
-        _textName.gameObject.transform.rotation = Quaternion.LookRotation(GameManager.Instance.CameraPosition());
-        Debug.Log("Current Time: " + TimeManager.TimeHour + " " + TimeManager.TimeMinute);
-        if (_agent.velocity.magnitude >= 0.05f)
+        _textName.gameObject.transform.rotation = Quaternion.LookRotation((Camera.main.transform.forward).normalized);
+        if (npcState == NPCState.PLAYERINTERACT)
+        {
+            playerInteraction();
+        }
+        if (_agent.velocity.magnitude >= 0.05f && npcState != NPCState.PLAYERINTERACT)
         {
             npcState = NPCState.MOVINGTONODE;
         }
-        if (_agent.remainingDistance >= 0f && npcState == NPCState.MOVINGTONODE)
+        if (_agent.remainingDistance >= float.Epsilon && npcState == NPCState.MOVINGTONODE)
         {
             npcState = NPCState.IDLE;
         }
@@ -46,10 +67,6 @@ public class NonPlayerCharacter : Interactable
             }
         }
         else hideNameplate();
-        if (npcState == NPCState.PLAYERINTERACT)
-        {
-            playerInteraction();
-        }
         handleSchedule();
     }
     override public void showNameplate()
@@ -66,40 +83,71 @@ public class NonPlayerCharacter : Interactable
             _textName.gameObject.SetActive(false);
         }
     }
+    #region PLAYER INTERACTION
     protected override void beginPlayerInteraction()
     {
-        _previousState = npcState;
+        previousNpcState = npcState;
         npcState = NPCState.PLAYERINTERACT;
         gameManager.gameState = GameState.NPCINTERACTION;
         _agent.isStopped = true;
         this.transform.LookAt(GameManager.Instance.player.transform);
+        GameManager.Instance.player.transform.LookAt(this.transform);
     }
-    protected override void exitPlayerInteraction()
-    {
-        npcState = _previousState;
-        _agent.isStopped = false;
-        gameManager.gameState = GameState.PLAY;
-    }
-    protected override void playerInteraction()
+    protected override IEnumerable playerInteraction()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             exitPlayerInteraction();
-            Debug.Log("Game State: " + gameManager.gameState);
         }
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Escape));
+        exitPlayerInteraction();
+    }
+    protected override void exitPlayerInteraction()
+    {
+        npcState = previousNpcState;
+        previousNpcState = NPCState.IDLE;
+        _agent.isStopped = false;
+        gameManager.gameState = GameState.PLAY;
+    }
+    #endregion PLAYER INTERACTION
+    #region SCHEDULE
+    private Queue<ScheduleNode> makeSchedule()
+    {
+        Queue<ScheduleNode> q = new Queue<ScheduleNode>();
+        foreach (ScheduleNode s in scheduleNodes)
+        {
+            q.Enqueue(s);
+        }
+        return q;
     }
     private void handleSchedule()
     {
-        Debug.Log("Hour To Leave: " + schedule.Peek().w);
-        if (TimeManager.TimeHour == schedule.Peek().w)
+        if (TimeManager.TimeHour == schedule.Peek().hourToLeave)
         {
             advanceSchedule();
         }
     }
     private void advanceSchedule()
     {
-        Vector4 v = schedule.Dequeue();
-        schedule.Enqueue(v);
-        _agent.SetDestination(v);
+        ScheduleNode s = schedule.Dequeue();
+        schedule.Enqueue(s);
+        _agent.SetDestination(s.worldPosition);
     }
+    #endregion SCHEDULE
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        int i = 0;
+        foreach (ScheduleNode s in scheduleNodes)
+        {
+            Gizmos.DrawWireSphere(s.worldPosition, 1f);
+            Handles.Label(new Vector3(s.worldPosition.x, s.worldPosition.y, s.worldPosition.z), "Node " + i + " leave @ hour " + s.hourToLeave);
+            i++;
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        Handles.Label(this.transform.position, characterName);
+    }
+#endif
 }

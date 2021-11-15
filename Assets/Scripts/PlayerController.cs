@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
@@ -24,8 +25,6 @@ public class PlayerController : MonoBehaviour
         pc = gameObject.GetComponent<CharacterController>();
         timeManagerIncrement = TimeManager.Increment;
         startPosition = transform.localPosition;
-        GameManager.Instance.PopulateFactions();
-        GameManager.Instance.DisplayRelationships();
     }
     void Update()
     {
