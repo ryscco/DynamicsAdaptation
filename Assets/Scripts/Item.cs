@@ -7,4 +7,5 @@ public class Item
     public string itemName;
     public ItemType itemType;
     public int quantity;
+    public bool isStackable;
 }

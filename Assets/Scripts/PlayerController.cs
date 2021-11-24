@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera;
     private Vector3 velocity, startPosition;
     public float timeManagerIncrement;
-    private Inventory _inventory;
+    static public Inventory _inventory;
     [SerializeField] private UI_Inventory _uiInventory;
     private void Awake()
     {
