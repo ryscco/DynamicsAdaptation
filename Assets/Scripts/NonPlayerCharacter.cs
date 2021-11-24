@@ -23,6 +23,7 @@ public class NonPlayerCharacter : Interactable
         public NPCPersonality personality;
     }
     private GameManager _gameManager;
+    private TimeManager _timeManager;
     private RelationshipManager _relationshipManager;
     public string characterName;
     public Family family;
@@ -32,18 +33,22 @@ public class NonPlayerCharacter : Interactable
     public NPCState npcState, previousNpcState;
     [SerializeField] private TextMeshPro _textName;
     private NavMeshAgent _agent;
+    [SerializeField] private Animator _anim;
     private void Awake()
     {
         _gameManager = GameManager.Instance;
+        _timeManager = TimeManager.Instance;
+        _agent = this.GetComponent<NavMeshAgent>();
     }
     void Start()
     {
+        _anim.SetBool("isWalking", false);
         _relationshipManager = GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>();
         npcState = NPCState.IDLE;
         _textName.text = characterName;
-        _agent = this.GetComponent<NavMeshAgent>();
         schedule = makeSchedule();
         advanceSchedule();
+        npcState = NPCState.IDLE;
     }
     void Update()
     {
@@ -56,29 +61,30 @@ public class NonPlayerCharacter : Interactable
         {
             npcState = NPCState.MOVINGTONODE;
         }
-        if (_agent.remainingDistance >= float.Epsilon && npcState == NPCState.MOVINGTONODE)
+        if (_agent.remainingDistance <= float.Epsilon && npcState == NPCState.MOVINGTONODE)
         {
             npcState = NPCState.IDLE;
         }
         if (this.isInteractable())
         {
-            showNameplate();
+            ShowNameplate();
             if (npcState != NPCState.PLAYERINTERACT && Input.GetKeyDown(KeyCode.Space))
             {
                 beginPlayerInteraction();
             }
         }
-        else hideNameplate();
+        else HideNameplate();
         handleSchedule();
+        AnimationState();
     }
-    override public void showNameplate()
+    override public void ShowNameplate()
     {
         if (!_textName.gameObject.activeSelf)
         {
             _textName.gameObject.SetActive(true);
         }
     }
-    public override void hideNameplate()
+    public override void HideNameplate()
     {
         if (_textName.gameObject.activeSelf)
         {
@@ -123,7 +129,7 @@ public class NonPlayerCharacter : Interactable
     }
     private void handleSchedule()
     {
-        if (TimeManager.TimeHour == schedule.Peek().hourToLeave)
+        if (_timeManager.TimeHour == schedule.Peek().hourToLeave)
         {
             advanceSchedule();
         }
@@ -133,6 +139,7 @@ public class NonPlayerCharacter : Interactable
         ScheduleNode s = schedule.Dequeue();
         schedule.Enqueue(s);
         _agent.SetDestination(s.worldPosition);
+        npcState = NPCState.MOVINGTONODE;
     }
     #endregion SCHEDULE
 #if UNITY_EDITOR
@@ -152,4 +159,19 @@ public class NonPlayerCharacter : Interactable
         Handles.DrawLine(this.transform.localPosition, this.transform.localPosition + this.transform.forward, 5f);
     }
 #endif
+    private void AnimationState()
+    {
+        switch (npcState)
+        {
+            case NPCState.IDLE:
+                _anim.SetBool("isWalking", false);
+                break;
+            case NPCState.MOVINGTONODE:
+                _anim.SetBool("isWalking", true);
+                break;
+            default:
+                _anim.SetBool("isWalking", false);
+                break;
+        }
+    }
 }

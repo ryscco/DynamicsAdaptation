@@ -8,23 +8,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _defaultPlayerSpeed = 5f;
     private float _currentPlayerSpeed;
     [SerializeField] private float _playerSpeedModifier = 1.5f;
+    [SerializeField] private Animator _anim;
     private bool onGround;
     public CharacterController pc;
     private GameObject mainCamGO;
     private Camera mainCamera;
     private Vector3 velocity, startPosition;
     public float timeManagerIncrement;
+    private Inventory _inventory;
+    [SerializeField] private UI_Inventory _uiInventory;
     private void Awake()
     {
         GameManager.Instance.AttachPlayer();
+        _inventory = new Inventory();
     }
     void Start()
     {
         mainCamGO = GameObject.Find("Main Camera");
         mainCamera = mainCamGO.GetComponent<Camera>();
         pc = gameObject.GetComponent<CharacterController>();
-        timeManagerIncrement = TimeManager.Increment;
+        timeManagerIncrement = TimeManager.Instance.Increment;
         startPosition = transform.localPosition;
+        _uiInventory.SetInventory(_inventory);
     }
     void Update()
     {
@@ -71,9 +76,18 @@ public class PlayerController : MonoBehaviour
                 Vector3 facing = velocity.normalized;
                 facing.y = 0f;
                 gameObject.transform.forward = facing;
+                _anim.SetBool("isWalking", true);
             }
-            #endregion Player Movement
+            else
+            {
+                _anim.SetBool("isWalking", false);
+            }
+            if (transform.position.y < 1f)
+            {
+                transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
+            }
         }
+        #endregion Player Movement
         if (GameManager.Instance.gameState == GameState.NPCINTERACTION)
         {
             if (Input.GetKeyDown(KeyCode.Escape))

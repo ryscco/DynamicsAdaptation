@@ -128,4 +128,18 @@ public class RelationshipManager : MonoBehaviour
             }
         }
     }
+    public float GetRelationshipValue(NonPlayerCharacter npc1, NonPlayerCharacter npc2)
+    {
+        foreach (Relationship r in allRelationships)
+        {
+            if (r.npc1 == npc1.gameObject)
+            {
+                foreach (Relationship x in allRelationships)
+                {
+                    if (x.npc2 == npc2.gameObject) return x.relationshipValue;
+                }
+            }
+        }
+        return 0;
+    }
 }
