@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _anim;
     private bool onGround;
     public CharacterController pc;
-    private GameObject mainCamGO;
-    private Camera mainCamera;
+    private GameObject _mainCamGO;
+    private Camera _mainCam;
     private Vector3 velocity, startPosition;
     public float timeManagerIncrement;
     static public Inventory _inventory;
@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        mainCamGO = GameObject.Find("Main Camera");
-        mainCamera = mainCamGO.GetComponent<Camera>();
+        _mainCamGO = GameObject.Find("Main Camera");
+        _mainCam = _mainCamGO.GetComponent<Camera>();
         pc = gameObject.GetComponent<CharacterController>();
         timeManagerIncrement = TimeManager.Instance.Increment;
         startPosition = transform.localPosition;
@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour
     }
     private void HandlePlayerInput()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            //Inventory.RemoveItem
+        }
         if (GameManager.Instance.gameState != GameState.NPCINTERACTION)
         {
             #region Player Movement
@@ -54,8 +58,8 @@ public class PlayerController : MonoBehaviour
             float z = Input.GetAxisRaw("Vertical");
             if (GameManager.Instance.camMode == CameraMode.FIXED)
             {
-                Vector3 camFwd = mainCamera.transform.forward;
-                Vector3 camRight = mainCamera.transform.right;
+                Vector3 camFwd = _mainCam.transform.forward;
+                Vector3 camRight = _mainCam.transform.right;
                 camFwd.y = camRight.y = 0f;
                 camFwd = camFwd.normalized;
                 camRight = camRight.normalized;

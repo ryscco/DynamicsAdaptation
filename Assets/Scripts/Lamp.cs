@@ -2,11 +2,10 @@ using UnityEngine;
 public class Lamp : MonoBehaviour
 {
     private TimeManager _timeManager;
-    [SerializeField] private Light light;
+    [SerializeField] private GameObject lightGO;
     private void Awake()
     {
         _timeManager = TimeManager.Instance;
-        light = GetComponentInChildren<Light>();
     }
     void Start()
     {
@@ -20,11 +19,11 @@ public class Lamp : MonoBehaviour
     {
         if (_timeManager.TimeOfDay == TimeOfDay.MORNING || _timeManager.TimeOfDay == TimeOfDay.AFTERNOON)
         {
-            light.gameObject.SetActive(false);
+            lightGO.SetActive(false);
         }
         else if (_timeManager.TimeOfDay == TimeOfDay.NIGHT)
         {
-            light.gameObject.SetActive(true);
+            lightGO.SetActive(true);
         }
     }
 }

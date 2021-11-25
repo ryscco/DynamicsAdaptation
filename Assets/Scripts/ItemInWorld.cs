@@ -5,6 +5,7 @@ using TMPro;
 public class ItemInWorld : Interactable
 {
     public ItemSO itemScriptableObject;
+    public GameObject namePlateTMPro;
     string _itemName;
     ItemType _itemType;
     public int itemQuantity;
@@ -14,10 +15,6 @@ public class ItemInWorld : Interactable
         _itemName = itemScriptableObject.itemName;
         _itemType = itemScriptableObject.itemType;
         _isStackable = itemScriptableObject.isStackable;
-    }
-    private void Start()
-    {
-        namePlateTMPro.transform.rotation = LookAtCamera();
     }
     private void Update()
     {
@@ -31,24 +28,24 @@ public class ItemInWorld : Interactable
         }
         else HideNameplate();
     }
-    public TextMeshPro namePlateTMPro;
     public override void HideNameplate()
     {
-        if (namePlateTMPro.gameObject.activeSelf)
+        if (namePlateTMPro.activeSelf)
         {
-            namePlateTMPro.gameObject.SetActive(false);
+            namePlateTMPro.SetActive(false);
         }
     }
     public override void ShowNameplate()
     {
-        if (!namePlateTMPro.gameObject.activeSelf)
+        if (!namePlateTMPro.activeSelf)
         {
-            namePlateTMPro.gameObject.SetActive(true);
+            namePlateTMPro.gameObject.transform.rotation = LookAtCamera;
+            namePlateTMPro.SetActive(true);
         }
     }
     protected override void beginPlayerInteraction()
     {
-        PlayerController._inventory.AddItem(new Item() { itemName = _itemName, itemType = _itemType, quantity = itemQuantity, isStackable = _isStackable });
+        Inventory.AddItem(new Item() { itemName = _itemName, itemType = _itemType, quantity = itemQuantity, isStackable = _isStackable });
         exitPlayerInteraction();
     }
     protected override void exitPlayerInteraction()

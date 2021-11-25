@@ -1,18 +1,19 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class Inventory
 {
-    public event EventHandler OnItemListChanged;
-    private List<Item> itemList;
+    public static Inventory Instance;
+    public static event EventHandler OnItemListChanged;
+    private static List<Item> itemList;
     public Inventory()
     {
+        Instance = this;
         itemList = new List<Item>();
-        //AddItem(new Item() { itemName = "Gold", itemType = ItemType.COIN, quantity = 10 });
-        AddItem(new Item() { itemName = "Flower", itemType = ItemType.GIFT, quantity = 1, isStackable = true });
     }
-    public void AddItem(Item i)
+    public static void AddItem(Item i)
     {
         if (i.isStackable)
         {
@@ -31,8 +32,50 @@ public class Inventory
             }
         }
         else itemList.Add(i);
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+        OnItemListChanged?.Invoke(Instance, EventArgs.Empty);
     }
+    public static void RemoveItem(Item i)
+    {
+        if (i.isStackable)
+        {
+            Item itemInInventory = null;
+            foreach (Item item in itemList)
+            {
+                if (item.itemName == i.itemName)
+                {
+                    item.quantity -= i.quantity;
+                    itemInInventory = item;
+                }
+            }
+            if (itemInInventory != null && itemInInventory.quantity <= 0)
+            {
+                itemList.Remove(i);
+            }
+        }
+        else itemList.Remove(i);
+        OnItemListChanged?.Invoke(Instance, EventArgs.Empty);
+    }
+    //public static void RemoveItem(string i)
+    //{
+    //    if (i.isStackable)
+    //    {
+    //        Item itemInInventory = null;
+    //        foreach (Item item in itemList)
+    //        {
+    //            if (item.itemName == i.itemName)
+    //            {
+    //                item.quantity -= i.quantity;
+    //                itemInInventory = item;
+    //            }
+    //        }
+    //        if (itemInInventory != null && itemInInventory.quantity <= 0)
+    //        {
+    //            itemList.Remove(i);
+    //        }
+    //    }
+    //    else itemList.Remove(i);
+    //    OnItemListChanged?.Invoke(Instance, EventArgs.Empty);
+    //}
     public List<Item> GetItemList()
     {
         return itemList;
