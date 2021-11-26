@@ -38,10 +38,6 @@ public class PlayerController : MonoBehaviour
     }
     private void HandlePlayerInput()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //Inventory.RemoveItem
-        }
         if (GameManager.Instance.gameState != GameState.NPCINTERACTION)
         {
             #region Player Movement

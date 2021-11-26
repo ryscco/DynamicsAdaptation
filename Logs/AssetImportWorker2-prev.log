@@ -15,7 +15,7 @@ F:/Documents/GitHub/AWN2PC_RELMAN
 -logFile
 Logs/AssetImportWorker2.log
 -srvPort
-55078
+52082
 Successfully changed project path to: F:/Documents/GitHub/AWN2PC_RELMAN
 F:/Documents/GitHub/AWN2PC_RELMAN
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,7 +47,7 @@ F:/Documents/GitHub/AWN2PC_RELMAN
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 94.36 ms, found 5 plugins.
+Refreshing native plugins compatible for Editor in 87.85 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.2.3f1 (32358a8527b4)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.2.3f1/Editor/Data/Resources/UnitySubsystems
@@ -63,89 +63,89 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.2.3f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.2.3f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.2.3f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56704
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56600
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.2.3f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.003576 seconds.
+Registered in 0.003462 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 93.23 ms, found 5 plugins.
+Refreshing native plugins compatible for Editor in 93.46 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.495 seconds
+- Completed reload, in  0.460 seconds
 Domain Reload Profiling:
-	ReloadAssembly (495ms)
-		BeginReloadAssembly (54ms)
+	ReloadAssembly (461ms)
+		BeginReloadAssembly (44ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (0ms)
-		EndReloadAssembly (386ms)
-			LoadAssemblies (52ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (362ms)
+			LoadAssemblies (43ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (74ms)
+			SetupTypeCache (66ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (21ms)
-			SetupLoadedEditorAssemblies (249ms)
+			RebuildScriptCaches (18ms)
+			SetupLoadedEditorAssemblies (239ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (11ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (93ms)
+				RefreshPlugins (94ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (107ms)
-				ProcessInitializeOnLoadMethodAttributes (36ms)
+				ProcessInitializeOnLoadAttributes (101ms)
+				ProcessInitializeOnLoadMethodAttributes (33ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.002611 seconds.
+Registered in 0.002403 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image F:\Documents\GitHub\AWN2PC_RELMAN\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image F:\Documents\GitHub\AWN2PC_RELMAN\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.20 ms, found 5 plugins.
+Refreshing native plugins compatible for Editor in 1.15 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.971 seconds
+- Completed reload, in  0.901 seconds
 Domain Reload Profiling:
-	ReloadAssembly (972ms)
-		BeginReloadAssembly (131ms)
+	ReloadAssembly (901ms)
+		BeginReloadAssembly (112ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (21ms)
-		EndReloadAssembly (771ms)
-			LoadAssemblies (60ms)
+			CreateAndSetChildDomain (17ms)
+		EndReloadAssembly (718ms)
+			LoadAssemblies (47ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (162ms)
+			SetupTypeCache (149ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (43ms)
-			SetupLoadedEditorAssemblies (446ms)
+			RebuildScriptCaches (38ms)
+			SetupLoadedEditorAssemblies (418ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (9ms)
+				InitializePlatformSupportModulesInManaged (8ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (63ms)
-				ProcessInitializeOnLoadAttributes (315ms)
-				ProcessInitializeOnLoadMethodAttributes (52ms)
-				AfterProcessingInitializeOnLoad (5ms)
+				BeforeProcessingInitializeOnLoad (60ms)
+				ProcessInitializeOnLoadAttributes (292ms)
+				ProcessInitializeOnLoadMethodAttributes (51ms)
+				AfterProcessingInitializeOnLoad (4ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (5ms)
+			AwakeInstancesAfterBackupRestoration (4ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 2.33 ms, found 5 plugins.
+Refreshing native plugins compatible for Editor in 1.36 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3897 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 151 unused Assets / (177.1 KB). Loaded Objects now: 4339.
-Memory consumption went from 153.0 MB to 152.8 MB.
-Total: 5.756700 ms (FindLiveObjects: 0.506900 ms CreateObjectMapping: 0.133800 ms MarkObjects: 4.802500 ms  DeleteObjects: 0.311600 ms)
+Unloading 3906 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 151 unused Assets / (177.2 KB). Loaded Objects now: 4348.
+Memory consumption went from 153.2 MB to 153.0 MB.
+Total: 2.837300 ms (FindLiveObjects: 0.233600 ms CreateObjectMapping: 0.081700 ms MarkObjects: 2.333700 ms  DeleteObjects: 0.187500 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -157,109 +157,3 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 20390.355052 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_Castle_Hoarding_Corner_L_01_Convex 4.asset
-  artifactKey: Guid(d1194e9519fc19c42bd185e34793280a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_Castle_Hoarding_Corner_L_01_Convex 4.asset using Guid(d1194e9519fc19c42bd185e34793280a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c7685e72b503d1a804c6c68ecc9d5bf') in 0.118500 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000023 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Prop_Bar_Tap_Handle_02_Convex.asset
-  artifactKey: Guid(dfdcba507700a7f4394a591bace6d215) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Prop_Bar_Tap_Handle_02_Convex.asset using Guid(dfdcba507700a7f4394a591bace6d215) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd013632c211ee99a3ee8d1594a925207') in 0.014366 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000020 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_Castle_Wall_Archway_02_Convex 1.asset
-  artifactKey: Guid(e3e1fb0fb14ac6c46aff40663f37b36a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_Castle_Wall_Archway_02_Convex 1.asset using Guid(e3e1fb0fb14ac6c46aff40663f37b36a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9919e2b7edd836d3fbf8d2b33cb2874d') in 0.032622 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000016 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Wep_Mod_Sword_Blade_05_Convex.asset
-  artifactKey: Guid(8ff74a13abe82854096117a6237fd343) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Wep_Mod_Sword_Blade_05_Convex.asset using Guid(8ff74a13abe82854096117a6237fd343) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6ff4c3e3de6708bf3e4c19e0b034da7') in 0.014073 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000019 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Wep_Dagger_07_Convex.asset
-  artifactKey: Guid(e99cc6dc3c48ec148921d85fd387caf7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Wep_Dagger_07_Convex.asset using Guid(e99cc6dc3c48ec148921d85fd387caf7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '75dc8184d0670330107ef8520c4cf384') in 0.012417 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_Castle_Battlements_Pillar_01_Convex.asset
-  artifactKey: Guid(2d4701df3a1b13a43ab8df314f1075c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_Castle_Battlements_Pillar_01_Convex.asset using Guid(2d4701df3a1b13a43ab8df314f1075c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '457ebc1dc87a04b5ca9d35467809d277') in 0.011366 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000031 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Item_Meat_Turkey_Cooked_01_Convex.asset
-  artifactKey: Guid(8434f5d06eb490647b1c6f57a7619739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Item_Meat_Turkey_Cooked_01_Convex.asset using Guid(8434f5d06eb490647b1c6f57a7619739) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19addbc4984a83f7073a4629ea246cba') in 0.014974 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000022 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Wep_Mod_Spear_Head_03_Convex.asset
-  artifactKey: Guid(68d3b09e1be9eed49b6333dbe26cf8e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Wep_Mod_Spear_Head_03_Convex.asset using Guid(68d3b09e1be9eed49b6333dbe26cf8e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '789ee74c95dc82e006ba110475399f1e') in 0.011450 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Veh_Cart_01_Convex.asset
-  artifactKey: Guid(81e1daf3add0def4380b8514892fb2a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Veh_Cart_01_Convex.asset using Guid(81e1daf3add0def4380b8514892fb2a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a6072b33c1ffb0b60d7f5e67428f4c1') in 0.017925 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000016 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_Castle_Wall_Pillars_Half_Corner_S_01_Convex 1.asset
-  artifactKey: Guid(c5c37910397bf2e49985ac6eaa126a1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_Castle_Wall_Pillars_Half_Corner_S_01_Convex 1.asset using Guid(c5c37910397bf2e49985ac6eaa126a1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '541272756c40469b93a0200325e04116') in 0.031953 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_House_Tower_Angle_Window_05_Convex 2.asset
-  artifactKey: Guid(b5bd9b95fa648eb429fc69fbc49e45c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_House_Tower_Angle_Window_05_Convex 2.asset using Guid(b5bd9b95fa648eb429fc69fbc49e45c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c53883c5e4dc607108346efed1a4bcd') in 0.030674 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Item_Wargames_Piece_07_Convex.asset
-  artifactKey: Guid(8ba5b485abec0044d8c1ea8ca05c5fe8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Item_Wargames_Piece_07_Convex.asset using Guid(8ba5b485abec0044d8c1ea8ca05c5fe8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9a3772e256d9a6a7039fc6791d24333') in 0.011439 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/PolygonFantasyKingdom/Textures/Ground/PFK_Texture_Ground_Grass_01_Dark.png
-  artifactKey: Guid(5e1b44b6b0ff2ee4cb607a807ab32950) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Textures/Ground/PFK_Texture_Ground_Grass_01_Dark.png using Guid(5e1b44b6b0ff2ee4cb607a807ab32950) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8663697a2adeb02df51ffaf6d443850') in 0.044089 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000024 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Item_Wargames_Piece_08_Convex.asset
-  artifactKey: Guid(ca75c93c61833ba48ad132a78ec8e025) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Item_Wargames_Piece_08_Convex.asset using Guid(ca75c93c61833ba48ad132a78ec8e025) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a97cda77b1b66ac6bbc5dad721473f9') in 0.012136 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_House_Roof_Tile_Cover_02_Convex.asset
-  artifactKey: Guid(2a919f3d3dd41c54fa7315c27046fd6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Bld_House_Roof_Tile_Cover_02_Convex.asset using Guid(2a919f3d3dd41c54fa7315c27046fd6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c54c15b209d72585b5b76a3aeb25203') in 0.011284 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Env_Planter_Pot_03_Convex.asset
-  artifactKey: Guid(d552d6249786cd042819607524f87d3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Env_Planter_Pot_03_Convex.asset using Guid(d552d6249786cd042819607524f87d3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21be568617e35e9a4339894fea9ec42b') in 0.011588 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/PolygonFantasyKingdom/Models/Convex/SM_Prop_Target_04_Convex.asset
-  artifactKey: Guid(6e3c1736fe43ce541b847bcfbc0fa144) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PolygonFantasyKingdom/Models/Convex/SM_Prop_Target_04_Convex.asset using Guid(6e3c1736fe43ce541b847bcfbc0fa144) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0501075dbaeab3b4d26f2b43ff7e02e8') in 0.014437 seconds 
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-AssetImportWorker is now disconnected from the server
-Process exiting
-Exiting without the bug reporter. Application will terminate with return code 0
