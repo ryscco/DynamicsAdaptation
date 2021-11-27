@@ -22,6 +22,13 @@ public class NonPlayerCharacter : Interactable
         [Range(0f, 1f)] public float wealth;
         public NPCPersonality personality;
     }
+    [System.Serializable]
+    public struct GiftsAcceptedOrItemsWanted
+    {
+        public ItemSO giftOrItem;
+        public NonPlayerCharacter relationshipToAffect;
+        public float relationshipChangeValue;
+    }
     private GameManager _gameManager;
     private TimeManager _timeManager;
     private RelationshipManager _relationshipManager;
@@ -30,10 +37,13 @@ public class NonPlayerCharacter : Interactable
     [SerializeField] public ScheduleNode[] scheduleNodes;
     public Queue<ScheduleNode> schedule;
     [SerializeField] public ConnectionLogic connectionLogic;
+    [SerializeField] public GiftsAcceptedOrItemsWanted[] giftsAcceptedOrItemsWanted;
     public NPCState npcState, previousNpcState;
     [SerializeField] private TextMeshPro _textName;
     private NavMeshAgent _agent;
     [SerializeField] private Animator _anim;
+    public bool WantsItem { get; private set; }
+    private Item _haveWantedItem = null;
     private void Awake()
     {
         _gameManager = GameManager.Instance;
@@ -42,6 +52,7 @@ public class NonPlayerCharacter : Interactable
     }
     void Start()
     {
+        WantsItem = (giftsAcceptedOrItemsWanted.Count<GiftsAcceptedOrItemsWanted>() > 0);
         _anim.SetBool("isWalking", false);
         _relationshipManager = GameObject.Find("RelationshipManager").GetComponent<RelationshipManager>();
         npcState = NPCState.IDLE;
@@ -49,9 +60,20 @@ public class NonPlayerCharacter : Interactable
         schedule = makeSchedule();
         advanceSchedule();
         npcState = NPCState.IDLE;
+        //if (WantsItem)
+        //{
+        //    int i = 0;
+        //    foreach (GiftsAcceptedOrItemsWanted g in giftsAcceptedOrItemsWanted)
+        //    {
+        //        Debug.Log(characterName + " wants item: " + giftsAcceptedOrItemsWanted[i].giftOrItem.itemName);
+        //        i++;
+        //    }
+        //}
+        //else Debug.Log(characterName + " doesn't want an item");
     }
     void Update()
     {
+        _haveWantedItem = ItemOrGiftCheck();
         _textName.gameObject.transform.rotation = Quaternion.LookRotation((Camera.main.transform.forward).normalized);
         if (npcState == NPCState.PLAYERINTERACT)
         {
@@ -101,6 +123,8 @@ public class NonPlayerCharacter : Interactable
         this.transform.LookAt(GameManager.Instance.player.transform);
         GameManager.Instance.player.transform.LookAt(this.transform);
         _relationshipManager.PrintRelationships(this.gameObject);
+        Debug.Log((_haveWantedItem != null) ? "Player has wanted item." : "Player doesn't have the wanted item.");
+        //string print = (_haveWantedItem != null) ? "Player has wanted item." : "Player doesn't have the wanted item.";
     }
     protected override void playerInteraction()
     {
@@ -163,15 +187,29 @@ public class NonPlayerCharacter : Interactable
     {
         switch (npcState)
         {
+            default:
             case NPCState.IDLE:
                 _anim.SetBool("isWalking", false);
                 break;
             case NPCState.MOVINGTONODE:
                 _anim.SetBool("isWalking", true);
                 break;
-            default:
-                _anim.SetBool("isWalking", false);
-                break;
         }
+    }
+    private Item ItemOrGiftCheck()
+    {
+        if (!WantsItem) return null;
+        Item haveWantedItem = null;
+        foreach (Item i in Inventory.Instance.GetItemList())
+        {
+            for (int x = 0; x < giftsAcceptedOrItemsWanted.Count(); x++)
+            {
+                if (giftsAcceptedOrItemsWanted[x].giftOrItem.itemName == i.itemName)
+                {
+                    haveWantedItem = i;
+                }
+            }
+        }
+        return haveWantedItem;
     }
 }

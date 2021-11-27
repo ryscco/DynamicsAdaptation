@@ -55,27 +55,6 @@ public class Inventory
         else itemList.Remove(i);
         OnItemListChanged?.Invoke(Instance, EventArgs.Empty);
     }
-    //public static void RemoveItem(string i)
-    //{
-    //    if (i.isStackable)
-    //    {
-    //        Item itemInInventory = null;
-    //        foreach (Item item in itemList)
-    //        {
-    //            if (item.itemName == i.itemName)
-    //            {
-    //                item.quantity -= i.quantity;
-    //                itemInInventory = item;
-    //            }
-    //        }
-    //        if (itemInInventory != null && itemInInventory.quantity <= 0)
-    //        {
-    //            itemList.Remove(i);
-    //        }
-    //    }
-    //    else itemList.Remove(i);
-    //    OnItemListChanged?.Invoke(Instance, EventArgs.Empty);
-    //}
     public List<Item> GetItemList()
     {
         return itemList;
