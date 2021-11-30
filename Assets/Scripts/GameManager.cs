@@ -36,8 +36,13 @@ public class GameManager
     public Vector3 CameraPosition() => Camera.main.transform.localPosition;
     public void SetCameraTransform(Transform t)
     {
-        Camera.main.transform.localPosition = t.localPosition;
-        Camera.main.transform.localRotation = t.localRotation;
+        Camera.main.transform.position = t.position;
+        Camera.main.transform.rotation = t.rotation;
+    }
+    public void SetCameraTransform(Vector3 p, Quaternion r)
+    {
+        Camera.main.transform.position = p;
+        Camera.main.transform.rotation = r;
     }
     public void OnApplicationQuit()
     {

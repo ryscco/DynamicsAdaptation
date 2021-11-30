@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using Ink.Runtime;
 public enum NPCJob { Fighter, Merchant, Shopkeeper }
 public enum NPCPersonality { Friendly, Rude, Reserved }
 public class NonPlayerCharacter : Interactable
@@ -29,6 +30,13 @@ public class NonPlayerCharacter : Interactable
         public NonPlayerCharacter relationshipToAffect;
         public float relationshipChangeValue;
     }
+    [System.Serializable]
+    public struct NPC_Story
+    {
+        [Header("Set this integer to -1 if no items are requisite for this story.")]
+        public int giftOrItemTriggerIndex;
+        public TextAsset story;
+    }
     private GameManager _gameManager;
     private TimeManager _timeManager;
     private RelationshipManager _relationshipManager;
@@ -38,17 +46,24 @@ public class NonPlayerCharacter : Interactable
     public Queue<ScheduleNode> schedule;
     [SerializeField] public ConnectionLogic connectionLogic;
     [SerializeField] public GiftsAcceptedOrItemsWanted[] giftsAcceptedOrItemsWanted;
+    public List<GiftsAcceptedOrItemsWanted> wanteds;
+    //private List<GiftsAcceptedOrItemsWanted> wanteds;
+    private BasicInkExample storyController;
+    [SerializeField] public NPC_Story[] story;
     public NPCState npcState, previousNpcState;
     [SerializeField] private TextMeshPro _textName;
     private NavMeshAgent _agent;
     [SerializeField] private Animator _anim;
     public bool WantsItem { get; private set; }
-    private Item _haveWantedItem = null;
+    public Item _haveWantedItem = null;
+    //private Item _haveWantedItem = null;
     private void Awake()
     {
         _gameManager = GameManager.Instance;
         _timeManager = TimeManager.Instance;
         _agent = this.GetComponent<NavMeshAgent>();
+        storyController = transform.Find("StoryController").GetComponent<BasicInkExample>();
+        wanteds = giftsAcceptedOrItemsWanted.ToList();
     }
     void Start()
     {
@@ -60,16 +75,7 @@ public class NonPlayerCharacter : Interactable
         schedule = makeSchedule();
         advanceSchedule();
         npcState = NPCState.IDLE;
-        //if (WantsItem)
-        //{
-        //    int i = 0;
-        //    foreach (GiftsAcceptedOrItemsWanted g in giftsAcceptedOrItemsWanted)
-        //    {
-        //        Debug.Log(characterName + " wants item: " + giftsAcceptedOrItemsWanted[i].giftOrItem.itemName);
-        //        i++;
-        //    }
-        //}
-        //else Debug.Log(characterName + " doesn't want an item");
+        SetStoryFile();
     }
     void Update()
     {
@@ -122,9 +128,12 @@ public class NonPlayerCharacter : Interactable
         _agent.isStopped = true;
         this.transform.LookAt(GameManager.Instance.player.transform);
         GameManager.Instance.player.transform.LookAt(this.transform);
+        GameManager.Instance.player.GetComponent<PlayerController>().EnableOverShoulderView();
         _relationshipManager.PrintRelationships(this.gameObject);
+        SetStoryFile();
+        storyController.gameObject.SetActive(true);
+        storyController.StartStory();
         Debug.Log((_haveWantedItem != null) ? "Player has wanted item." : "Player doesn't have the wanted item.");
-        //string print = (_haveWantedItem != null) ? "Player has wanted item." : "Player doesn't have the wanted item.";
     }
     protected override void playerInteraction()
     {
@@ -139,6 +148,7 @@ public class NonPlayerCharacter : Interactable
         previousNpcState = NPCState.IDLE;
         _agent.isStopped = false;
         _gameManager.gameState = GameState.PLAY;
+        GameManager.Instance.player.GetComponent<PlayerController>().DisableOverShoulderView();
     }
     #endregion PLAYER INTERACTION
     #region SCHEDULE
@@ -211,5 +221,83 @@ public class NonPlayerCharacter : Interactable
             }
         }
         return haveWantedItem;
+    }
+    private void ReceiveItem(Item item)
+    {
+        for (int i = 0; i < wanteds.Count; i++)
+        {
+            if (wanteds[i].giftOrItem.itemName == item.itemName)
+            {
+                Inventory.RemoveItem(item);
+                wanteds.Remove(wanteds[i]);
+            }
+        }
+    }
+    private void ReceiveItem(string i)
+    {
+        if (_haveWantedItem.itemName == i)
+        {
+            Debug.Log($"Player has {i}");
+            if (wanteds.Count > 0)
+            {
+                Debug.Log($"'wanteds' list contains: ");
+                foreach (GiftsAcceptedOrItemsWanted g in wanteds)
+                {
+                    Debug.Log(g.giftOrItem.itemName + ", ");
+                }
+            }
+            for (int j = 0; j < wanteds.Count; j++)
+            {
+                if (wanteds[j].giftOrItem.itemName.Equals(i))
+                {
+                    Debug.Log($"Found in 'wanteds' list");
+                    if (wanteds.Remove(wanteds.First(it => it.giftOrItem.itemName == i))) Debug.Log($"Removed {i} from 'wanteds' list. \nProof:");
+                    Inventory.RemoveItem(i);
+                    //if (wanteds.Count > 0)
+                    //{
+                    //    foreach (GiftsAcceptedOrItemsWanted gg in wanteds)
+                    //    {
+                    //        Debug.Log(gg.giftOrItem.itemName);
+                    //    }
+                    //    continue;
+                    //}
+                    //else if (wanteds.Count == 0)
+                    //{
+                    //    Debug.Log("'wanteds' list is empty.");
+                    //    continue;
+                    //}
+                }
+                //if (wanteds.Count == 0) continue;
+            }
+        }
+        else
+        {
+            Debug.Log($"Player does not have {i}");
+        }
+    }
+    private void SetStoryFile()
+    {
+        foreach (NPC_Story n in story)
+        {
+            if (WantsItem && n.giftOrItemTriggerIndex > -1 && _haveWantedItem != null)
+            {
+                storyController.SetStoryFile(n.story);
+                if (wanteds.Count > 0)
+                {
+                    storyController.story.BindExternalFunction("receiveItem", (string iN) =>
+                    {
+                        ReceiveItem(iN);
+                        Debug.Log("ReceiveItem called");
+                    });
+                    return;
+                }
+                else return;
+            }
+            else if (n.giftOrItemTriggerIndex == -1)
+            {
+                storyController.SetStoryFile(n.story);
+                return;
+            }
+        }
     }
 }

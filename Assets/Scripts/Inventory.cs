@@ -52,8 +52,23 @@ public class Inventory
                 itemList.Remove(i);
             }
         }
-        else itemList.Remove(i);
+        else
+        {
+            foreach (Item item in itemList)
+            {
+                if (item.itemName == i.itemName)
+                {
+                    itemList.Remove(i);
+                    continue;
+                }
+            }
+        }
         OnItemListChanged?.Invoke(Instance, EventArgs.Empty);
+    }
+    public static void RemoveItem(string s)
+    {
+        Item temp = itemList.First(i => i.itemName == s);
+        RemoveItem(temp);
     }
     public List<Item> GetItemList()
     {
