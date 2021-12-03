@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d276a088dcd8ae4e9f6c933abf466e5, type: 3}
   m_Name: personality_Reserved
   m_EditorClassIdentifier: 
-  personality: 0
+  personality: 2

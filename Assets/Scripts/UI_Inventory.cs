@@ -8,10 +8,16 @@ public class UI_Inventory : MonoBehaviour
 {
     private Inventory _inventory;
     private Transform _itemSlot, _itemSlotParent;
+    private int _removeQuantity = 1;
     private void Awake()
     {
         _itemSlotParent = transform.Find("ItemContainer");
         _itemSlot = _itemSlotParent.Find("ItemSlot");
+    }
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.RightShift)) _removeQuantity = 5;
+        else _removeQuantity = 1;
     }
     public void SetInventory(Inventory i)
     {
@@ -38,7 +44,7 @@ public class UI_Inventory : MonoBehaviour
             RectTransform itemSlotRT = Instantiate(_itemSlot, _itemSlotParent).GetComponent<RectTransform>();
             itemSlotRT.gameObject.SetActive(true);
             itemSlotRT.anchoredPosition = new Vector2(x * slotSize + 10, y);
-            itemSlotRT.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => Inventory.RemoveItem(i));
+            itemSlotRT.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => Inventory.RemoveItem(i, _removeQuantity));
             itemSlotRT.transform.Find("ItemText").GetComponent<TextMeshProUGUI>().text = i.itemName;
             itemSlotRT.transform.Find("ItemQuantity").GetComponent<TextMeshProUGUI>().text = i.quantity.ToString();
             x++;

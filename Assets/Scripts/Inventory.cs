@@ -43,7 +43,7 @@ public class Inventory
             {
                 if (item.itemName == i.itemName)
                 {
-                    item.quantity -= i.quantity;
+                    item.quantity -= 1;
                     itemInInventory = item;
                 }
             }
@@ -52,17 +52,29 @@ public class Inventory
                 itemList.Remove(i);
             }
         }
-        else
+        else itemList.Remove(i);
+        OnItemListChanged?.Invoke(Instance, EventArgs.Empty);
+    }
+    public static void RemoveItem(Item i, int q)
+    {
+        if (i.isStackable)
         {
+            Item itemInInventory = null;
             foreach (Item item in itemList)
             {
                 if (item.itemName == i.itemName)
                 {
-                    itemList.Remove(i);
-                    continue;
+                    if (q >= item.quantity) item.quantity = 0;
+                    else item.quantity -= q;
+                    itemInInventory = item;
                 }
             }
+            if (itemInInventory != null && itemInInventory.quantity <= 0)
+            {
+                itemList.Remove(i);
+            }
         }
+        else itemList.Remove(i);
         OnItemListChanged?.Invoke(Instance, EventArgs.Empty);
     }
     public static void RemoveItem(string s)

@@ -47,7 +47,6 @@ public class NonPlayerCharacter : Interactable
     [SerializeField] public ConnectionLogic connectionLogic;
     [SerializeField] public GiftsAcceptedOrItemsWanted[] giftsAcceptedOrItemsWanted;
     public List<GiftsAcceptedOrItemsWanted> wanteds;
-    //private List<GiftsAcceptedOrItemsWanted> wanteds;
     private BasicInkExample storyController;
     [SerializeField] public NPC_Story[] story;
     public NPCState npcState, previousNpcState;
@@ -56,7 +55,6 @@ public class NonPlayerCharacter : Interactable
     [SerializeField] private Animator _anim;
     public bool WantsItem { get; private set; }
     public Item _haveWantedItem = null;
-    //private Item _haveWantedItem = null;
     private void Awake()
     {
         _gameManager = GameManager.Instance;
@@ -105,7 +103,7 @@ public class NonPlayerCharacter : Interactable
         handleSchedule();
         AnimationState();
     }
-    override public void ShowNameplate()
+    public override void ShowNameplate()
     {
         if (!_textName.gameObject.activeSelf)
         {
@@ -117,6 +115,19 @@ public class NonPlayerCharacter : Interactable
         if (_textName.gameObject.activeSelf)
         {
             _textName.gameObject.SetActive(false);
+        }
+    }
+    private void AnimationState()
+    {
+        switch (npcState)
+        {
+            default:
+            case NPCState.IDLE:
+                _anim.SetBool("isWalking", false);
+                break;
+            case NPCState.MOVINGTONODE:
+                _anim.SetBool("isWalking", true);
+                break;
         }
     }
     #region PLAYER INTERACTION
@@ -141,6 +152,15 @@ public class NonPlayerCharacter : Interactable
         {
             exitPlayerInteraction();
         }
+        if (storyController.story.currentChoices.Count <= 0)
+        {
+            StartCoroutine("WaitThenExit", 1);
+            exitPlayerInteraction();
+        }
+    }
+    private IEnumerator WaitThenExit(int s)
+    {
+        yield return new WaitForSeconds(s);
     }
     protected override void exitPlayerInteraction()
     {
@@ -176,6 +196,7 @@ public class NonPlayerCharacter : Interactable
         npcState = NPCState.MOVINGTONODE;
     }
     #endregion SCHEDULE
+    #region EDITOR HELP
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
@@ -193,19 +214,7 @@ public class NonPlayerCharacter : Interactable
         Handles.DrawLine(this.transform.localPosition, this.transform.localPosition + this.transform.forward, 5f);
     }
 #endif
-    private void AnimationState()
-    {
-        switch (npcState)
-        {
-            default:
-            case NPCState.IDLE:
-                _anim.SetBool("isWalking", false);
-                break;
-            case NPCState.MOVINGTONODE:
-                _anim.SetBool("isWalking", true);
-                break;
-        }
-    }
+    #endregion
     private Item ItemOrGiftCheck()
     {
         if (!WantsItem) return null;
@@ -222,37 +231,40 @@ public class NonPlayerCharacter : Interactable
         }
         return haveWantedItem;
     }
-    private void ReceiveItem(Item item)
-    {
-        for (int i = 0; i < wanteds.Count; i++)
-        {
-            if (wanteds[i].giftOrItem.itemName == item.itemName)
-            {
-                Inventory.RemoveItem(item);
-                wanteds.Remove(wanteds[i]);
-            }
-        }
-    }
+    //private void ReceiveItem(Item item)
+    //{
+    //    for (int i = 0; i < wanteds.Count; i++)
+    //    {
+    //        if (wanteds[i].giftOrItem.itemName == item.itemName)
+    //        {
+    //            Inventory.RemoveItem(item);
+    //            wanteds.Remove(wanteds[i]);
+    //        }
+    //    }
+    //}
     private void ReceiveItem(string i)
     {
         if (_haveWantedItem.itemName == i)
         {
-            Debug.Log($"Player has {i}");
-            if (wanteds.Count > 0)
-            {
-                Debug.Log($"'wanteds' list contains: ");
-                foreach (GiftsAcceptedOrItemsWanted g in wanteds)
-                {
-                    Debug.Log(g.giftOrItem.itemName + ", ");
-                }
-            }
+            //Debug.Log($"Player has {i}");
+            //if (wanteds.Count > 0)
+            //{
+            //Debug.Log($"'wanteds' list contains: ");
+            //foreach (GiftsAcceptedOrItemsWanted g in wanteds)
+            //{
+            //    Debug.Log(g.giftOrItem.itemName + ", ");
+            //}
+            //}
             for (int j = 0; j < wanteds.Count; j++)
             {
                 if (wanteds[j].giftOrItem.itemName.Equals(i))
                 {
-                    Debug.Log($"Found in 'wanteds' list");
-                    if (wanteds.Remove(wanteds.First(it => it.giftOrItem.itemName == i))) Debug.Log($"Removed {i} from 'wanteds' list. \nProof:");
+                    //Debug.Log($"Found in 'wanteds' list");
+                    float relationshipChangeValue = wanteds[j].relationshipChangeValue;
+                    NonPlayerCharacter other = wanteds[j].relationshipToAffect;
+                    if (wanteds.Remove(wanteds.First(it => it.giftOrItem.itemName == i))) Debug.Log($"Removed {i} from 'wanteds' list.");
                     Inventory.RemoveItem(i);
+                    _relationshipManager.ChangeRelationship(this, other, relationshipChangeValue);
                     //if (wanteds.Count > 0)
                     //{
                     //    foreach (GiftsAcceptedOrItemsWanted gg in wanteds)
@@ -270,10 +282,10 @@ public class NonPlayerCharacter : Interactable
                 //if (wanteds.Count == 0) continue;
             }
         }
-        else
-        {
-            Debug.Log($"Player does not have {i}");
-        }
+        //else
+        //{
+        //    Debug.Log($"Player does not have {i}");
+        //}
     }
     private void SetStoryFile()
     {
@@ -284,9 +296,9 @@ public class NonPlayerCharacter : Interactable
                 storyController.SetStoryFile(n.story);
                 if (wanteds.Count > 0)
                 {
-                    storyController.story.BindExternalFunction("receiveItem", (string iN) =>
+                    storyController.story.BindExternalFunction("receiveItem", (string i) =>
                     {
-                        ReceiveItem(iN);
+                        ReceiveItem(i);
                         Debug.Log("ReceiveItem called");
                     });
                     return;

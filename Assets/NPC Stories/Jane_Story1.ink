@@ -1,4 +1,4 @@
-EXTERNAL receiveItem(iN)
+EXTERNAL receiveItem(i)
 - Jane looks at you hesitantly.
 *   'I have a gift for you.'
     Jane: 'Is it from John?'
@@ -12,3 +12,5 @@ EXTERNAL receiveItem(iN)
             Jane: 'It's from you then, how thoughtful!'
 *   'Nevermind.'
 - -> END
+=== function receiveItem(i) ===
+~ return

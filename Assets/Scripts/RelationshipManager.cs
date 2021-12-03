@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 public class RelationshipManager : MonoBehaviour
 {
-    public struct Relationship
+    public class Relationship
     {
         public GameObject npc1, npc2;
         public float relationshipValue;
@@ -112,7 +113,7 @@ public class RelationshipManager : MonoBehaviour
     public List<Relationship> GetRelationships(GameObject o)
     {
         List<Relationship> list = new List<Relationship>();
-        foreach(Relationship r in allRelationships)
+        foreach (Relationship r in allRelationships)
         {
             if (r.npc1 == o) list.Add(r);
         }
@@ -141,5 +142,23 @@ public class RelationshipManager : MonoBehaviour
             }
         }
         return 0;
+    }
+    public void ChangeRelationship(NonPlayerCharacter npc1, NonPlayerCharacter npc2, float val)
+    {
+        foreach (Relationship r in allRelationships)
+        {
+            if (r.npc1 == npc1.gameObject)
+            {
+                foreach (Relationship x in allRelationships)
+                {
+                    if (x.npc2 == npc2.gameObject)
+                    {
+                        x.relationshipValue += val;
+                        continue;
+                    }
+                }
+            }
+            continue;
+        }
     }
 }
