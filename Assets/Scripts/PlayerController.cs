@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private Transform _overShoulderView;
     private Vector3 _storedCamViewPos;
     private Quaternion _storedCamViewRot;
-
     private void Awake()
     {
         GameManager.Instance.AttachPlayer();

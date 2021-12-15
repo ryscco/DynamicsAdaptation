@@ -73,7 +73,8 @@ public class RelationshipManager : MonoBehaviour
                 {
                     if (npc1.family.inFaction.factionStandings[j].faction == npc2.family.inFaction)
                     {
-                        total = (runningTallyA + runningTallyB) * npc1.family.inFaction.factionStandings[j].interFactionStanding;
+                        total = (runningTallyA + runningTallyB) * 
+                            npc1.family.inFaction.factionStandings[j].interFactionStanding;
                     }
                 }
             }

@@ -5,7 +5,7 @@ using TMPro;
 public class ItemInWorld : Interactable
 {
     public ItemSO itemScriptableObject;
-    public GameObject namePlateTMPro;
+    public GameObject namePlateTMPro, indicatorParticle;
     string _itemName;
     ItemType _itemType;
     public int itemQuantity;
@@ -51,6 +51,7 @@ public class ItemInWorld : Interactable
     protected override void exitPlayerInteraction()
     {
         Destroy(transform.Find("WorldItemIndicator").gameObject);
+        Destroy(indicatorParticle);
         Destroy(GetComponent<ItemInWorld>());
     }
     protected override void playerInteraction()

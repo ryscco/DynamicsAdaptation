@@ -94,7 +94,7 @@ public class NonPlayerCharacter : Interactable
         if (this.isInteractable())
         {
             ShowNameplate();
-            if (npcState != NPCState.PLAYERINTERACT && Input.GetKeyDown(KeyCode.Space))
+            if (npcState != NPCState.PLAYERINTERACT && npcState != NPCState.MOVINGTONODE && Input.GetKeyDown(KeyCode.Space))
             {
                 beginPlayerInteraction();
             }
@@ -265,6 +265,8 @@ public class NonPlayerCharacter : Interactable
                     if (wanteds.Remove(wanteds.First(it => it.giftOrItem.itemName == i))) Debug.Log($"Removed {i} from 'wanteds' list.");
                     Inventory.RemoveItem(i);
                     _relationshipManager.ChangeRelationship(this, other, relationshipChangeValue);
+                    _relationshipManager.ChangeRelationship(other, this, relationshipChangeValue);
+                    _relationshipManager.PrintRelationships(this.gameObject);
                     //if (wanteds.Count > 0)
                     //{
                     //    foreach (GiftsAcceptedOrItemsWanted gg in wanteds)

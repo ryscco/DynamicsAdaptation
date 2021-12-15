@@ -7,10 +7,13 @@ public class BuildingExistence : MonoBehaviour
     [SerializeField] private GameObject nonPlayerCharacter1, nonPlayerCharacter2;
     private NonPlayerCharacter npc1, npc2;
     [SerializeField] private GameObject buildingA, buildingB;
+
+    public bool flip;
     void Start()
     {
         npc1 = nonPlayerCharacter1.GetComponent<NonPlayerCharacter>();
         npc2 = nonPlayerCharacter2.GetComponent<NonPlayerCharacter>();
+        flip = false;
     }
     void Update()
     {

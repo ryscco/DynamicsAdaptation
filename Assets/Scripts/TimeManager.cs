@@ -19,7 +19,7 @@ public class TimeManager
     }
     public int TimeHour { get => _hour; }
     public float TimeMinute { get => _minute; }
-    public float RunningTime { get => _runningTime / 50f; }
+    public float RunningTime { get => _runningTime / 50f; set => _runningTime = value; }
     public float Increment { get => _increment; }
     public TimeOfDay TimeOfDay { get => _timeOfDay; }
     public void OnApplicationQuit() => TimeManager._instance = null;
